@@ -11,15 +11,22 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarTrigger,
   useSidebar,
 } from "@/components/ui/sidebar";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from "@/components/ui/collapsible";
 
 export function AppSidebar() {
   const { state } = useSidebar();
   const collapsed = state === "collapsed";
   const navigate = useNavigate();
-  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>({});
+  const [openCategories, setOpenCategories] = useState<Record<string, boolean>>(
+    {}
+  );
 
   // 카테고리별 게시글 개수 계산
   const categoryStats = blogPosts.reduce((acc, post) => {
@@ -30,9 +37,9 @@ export function AppSidebar() {
   const categories = Object.keys(categoryStats);
 
   const toggleCategory = (category: string) => {
-    setOpenCategories(prev => ({
+    setOpenCategories((prev) => ({
       ...prev,
-      [category]: !prev[category]
+      [category]: !prev[category],
     }));
   };
 
@@ -41,33 +48,51 @@ export function AppSidebar() {
   };
 
   const getCategoryPosts = (category: string) => {
-    return blogPosts.filter(post => post.category === category);
+    return blogPosts.filter((post) => post.category === category);
   };
 
   return (
-    <Sidebar className={collapsed ? "w-14" : "w-80"} collapsible="icon">
-      <SidebarContent className="p-6">
+    <Sidebar collapsible="icon">
+      <SidebarContent className="p-4">
+        {/* <SidebarTrigger className={collapsed ? "mx-auto" : "ml-4"} /> */}
         {/* 프로필 섹션 */}
-        {!collapsed && (
-          <div className="mb-8 text-center">
-            <div className="w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20">
-              <img 
-                src="/lovable-uploads/5fbf1d63-89a1-4500-9b18-0faeb7a58205.png" 
-                alt="keiidev 프로필" 
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <h2 className="text-xl font-bold text-foreground mb-2">keiidev</h2>
-            <p className="text-sm text-muted-foreground leading-relaxed">
-              프론트엔드 개발자로 성장하며<br />
-              배운 것들을 기록하고 공유합니다.
-            </p>
+        <div className={collapsed ? "mb-6 text-center" : "mb-8 text-center"}>
+          <div
+            className={
+              collapsed
+                ? "w-8 h-8 mx-auto mb-2 rounded-full overflow-hidden border-2 border-primary/20"
+                : "w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20"
+            }
+          >
+            <img
+              src="/lovable-uploads/5fbf1d63-89a1-4500-9b18-0faeb7a58205.png"
+              alt="keiidev 프로필"
+              className="w-full h-full object-cover"
+            />
           </div>
-        )}
+          {!collapsed && (
+            <>
+              <h2 className="text-xl font-bold text-foreground mb-2">
+                keiidev
+              </h2>
+              <p className="text-sm text-muted-foreground leading-relaxed">
+                프론트엔드 개발자로 성장하며
+                <br />
+                배운 것들을 기록하고 공유합니다.
+              </p>
+            </>
+          )}
+        </div>
 
         {/* 카테고리 폴더 섹션 */}
         <SidebarGroup>
-          <SidebarGroupLabel className="text-xs font-semibold text-muted-foreground mb-3">
+          <SidebarGroupLabel
+            className={
+              collapsed
+                ? "text-center mb-2"
+                : "text-xs font-semibold text-muted-foreground mb-3"
+            }
+          >
             {collapsed ? "📁" : "카테고리"}
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -79,10 +104,25 @@ export function AppSidebar() {
 
                 return (
                   <SidebarMenuItem key={category}>
-                    <Collapsible open={isOpen} onOpenChange={() => toggleCategory(category)}>
+                    <Collapsible
+                      open={isOpen}
+                      onOpenChange={() => toggleCategory(category)}
+                    >
                       <CollapsibleTrigger asChild>
-                        <SidebarMenuButton className="w-full justify-between hover:bg-accent/50 transition-colors">
-                          <div className="flex items-center gap-2">
+                        <SidebarMenuButton
+                          className={
+                            collapsed
+                              ? "w-full justify-center p-2"
+                              : "w-full justify-between hover:bg-accent/50 transition-colors"
+                          }
+                        >
+                          <div
+                            className={
+                              collapsed
+                                ? "flex items-center justify-center"
+                                : "flex items-center gap-2"
+                            }
+                          >
                             {isOpen ? (
                               <FolderOpen className="h-4 w-4 text-primary" />
                             ) : (
@@ -99,7 +139,7 @@ export function AppSidebar() {
                           </div>
                         </SidebarMenuButton>
                       </CollapsibleTrigger>
-                      
+
                       {!collapsed && (
                         <CollapsibleContent className="ml-4 mt-1">
                           <div className="space-y-1">

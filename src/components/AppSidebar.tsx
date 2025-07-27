@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Folder, FolderOpen, FileText } from "lucide-react";
+import { Folder, FolderOpen, FileText, User } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { blogPosts } from "@/data/blogPosts";
 import PopularPosts from "./PopularPosts";
@@ -60,27 +60,37 @@ export function AppSidebar() {
           <div
             className={
               collapsed
-                ? "w-8 h-8 mx-auto mb-2 rounded-full overflow-hidden border-2 border-primary/20"
-                : "w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20"
+                ? "w-8 h-8 mx-auto mb-2 rounded-full overflow-hidden border-2 border-primary/20 cursor-pointer hover:border-primary/40 transition-colors"
+                : "w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20 cursor-pointer hover:border-primary/40 transition-colors"
             }
+            onClick={() => navigate("/about")}
           >
             <img
               src="/lovable-uploads/5fbf1d63-89a1-4500-9b18-0faeb7a58205.png"
               alt="keiidev 프로필"
               className="w-full h-full object-cover"
-              onClick={() => navigate("/")}
             />
           </div>
           {!collapsed && (
             <>
-              <h2 className="text-xl font-bold text-foreground mb-2">
+              <h2 
+                className="text-xl font-bold text-foreground mb-2 cursor-pointer hover:text-primary transition-colors"
+                onClick={() => navigate("/about")}
+              >
                 keiidev
               </h2>
-              <p className="text-sm text-muted-foreground leading-relaxed">
+              <p className="text-sm text-muted-foreground leading-relaxed mb-4">
                 프론트엔드 개발자로 성장하며
                 <br />
                 배운 것들을 기록하고 공유합니다.
               </p>
+              <button
+                onClick={() => navigate("/about")}
+                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
+              >
+                <User className="h-3 w-3" />
+                내 소개 보기
+              </button>
             </>
           )}
         </div>

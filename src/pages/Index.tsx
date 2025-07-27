@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { SidebarTrigger } from "@/components/ui/sidebar";
 import Header from "@/components/Header";
 import BlogPost from "@/components/BlogPost";
 import CategoryFilter from "@/components/CategoryFilter";
@@ -21,7 +22,12 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background font-inter">
-      <Header />
+      <header className="h-14 flex items-center border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
+        <SidebarTrigger className="ml-4" />
+        <div className="flex-1">
+          <Header />
+        </div>
+      </header>
       
       <main className="container mx-auto px-4 py-12">
         <div className="text-center mb-12">

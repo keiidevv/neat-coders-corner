@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Folder, FolderOpen, FileText } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { blogPosts } from "@/data/blogPosts";
+import PopularPosts from "./PopularPosts";
 import {
   Sidebar,
   SidebarContent,
@@ -163,6 +164,12 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
+        
+        {!collapsed && (
+          <div className="mt-auto">
+            <PopularPosts />
+          </div>
+        )}
       </SidebarContent>
     </Sidebar>
   );

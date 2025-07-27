@@ -8,6 +8,7 @@ export interface BlogPost {
   tags: string[];
   category: string;
   featured?: boolean;
+  views?: number;
 }
 
 export const blogPosts: BlogPost[] = [
@@ -29,7 +30,8 @@ React 18에서 Suspense는 더욱 강력해졌습니다...`,
     readTime: "8분",
     tags: ["React", "성능", "JavaScript"],
     category: "React",
-    featured: true
+    featured: true,
+    views: 1234
   },
   {
     id: "2", 
@@ -39,7 +41,8 @@ React 18에서 Suspense는 더욱 강력해졌습니다...`,
     date: "2024년 1월 10일",
     readTime: "12분",
     tags: ["TypeScript", "타입", "개발도구"],
-    category: "TypeScript"
+    category: "TypeScript",
+    views: 892
   },
   {
     id: "3",
@@ -49,7 +52,8 @@ React 18에서 Suspense는 더욱 강력해졌습니다...`,
     date: "2024년 1월 5일", 
     readTime: "10분",
     tags: ["CSS", "레이아웃", "웹디자인"],
-    category: "Web"
+    category: "Web",
+    views: 756
   },
   {
     id: "4",
@@ -59,7 +63,8 @@ React 18에서 Suspense는 더욱 강력해졌습니다...`,
     date: "2024년 1월 1일",
     readTime: "15분", 
     tags: ["JavaScript", "비동기", "Promise"],
-    category: "JavaScript"
+    category: "JavaScript",
+    views: 1456
   },
   {
     id: "5",
@@ -70,6 +75,7 @@ React 18에서 Suspense는 더욱 강력해졌습니다...`,
     readTime: "11분",
     tags: ["성능", "최적화", "웹개발"],
     category: "Web",
-    featured: true
+    featured: true,
+    views: 2134
   }
 ];

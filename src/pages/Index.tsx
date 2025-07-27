@@ -4,6 +4,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import BlogPost from "@/components/BlogPost";
 import CategoryFilter from "@/components/CategoryFilter";
 import { blogPosts } from "@/data/blogPosts";
+import { getViewCount } from "@/hooks/useViewTracking";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -50,6 +51,7 @@ const Index = () => {
                 readTime={post.readTime}
                 tags={post.tags}
                 featured={post.featured}
+                views={getViewCount(post.id)}
               />
             </div>
           ))}

@@ -1,4 +1,4 @@
-import { Calendar, Clock, Tag } from "lucide-react";
+import { Calendar, Clock, Tag, Eye } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
@@ -9,9 +9,10 @@ interface BlogPostProps {
   readTime: string;
   tags: string[];
   featured?: boolean;
+  views?: number;
 }
 
-const BlogPost = ({ title, excerpt, date, readTime, tags, featured }: BlogPostProps) => {
+const BlogPost = ({ title, excerpt, date, readTime, tags, featured, views }: BlogPostProps) => {
   return (
     <Card className={`hover:shadow-lg transition-all duration-300 cursor-pointer group ${featured ? 'border-primary/20' : ''}`}>
       <CardHeader className="pb-3">
@@ -32,6 +33,12 @@ const BlogPost = ({ title, excerpt, date, readTime, tags, featured }: BlogPostPr
             <Clock className="h-4 w-4" />
             <span>{readTime}</span>
           </div>
+          {views && (
+            <div className="flex items-center space-x-1">
+              <Eye className="h-4 w-4" />
+              <span>{views.toLocaleString()}</span>
+            </div>
+          )}
         </div>
       </CardHeader>
       <CardContent>

@@ -1,15 +1,23 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Tag } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Tag, Eye } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogPosts";
 import Comments from "@/components/Comments";
+import { useViewTracking, getViewCount } from "@/hooks/useViewTracking";
 
 const BlogPostPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  
+  // 조회수 추적
+  if (id) {
+    useViewTracking(id);
+  }
+  
   const post = blogPosts.find((p) => p.id === id);
+  const viewCount = id ? getViewCount(id) : 0;
 
   if (!post) {
     return (
@@ -60,6 +68,11 @@ const BlogPostPage = () => {
               <div className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
                 <span>{post.readTime}</span>
+              </div>
+
+              <div className="flex items-center gap-1">
+                <Eye className="h-4 w-4" />
+                <span>{viewCount.toLocaleString()} 조회</span>
               </div>
             </div>
 

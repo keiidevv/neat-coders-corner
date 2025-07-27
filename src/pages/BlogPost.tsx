@@ -4,6 +4,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { blogPosts } from "@/data/blogPosts";
+import Comments from "@/components/Comments";
 
 const BlogPostPage = () => {
   const { id } = useParams();
@@ -85,6 +86,8 @@ const BlogPostPage = () => {
               {post.content}
             </div>
           </div>
+          
+          <Comments postId={post.id} />
         </article>
       </main>
     </div>

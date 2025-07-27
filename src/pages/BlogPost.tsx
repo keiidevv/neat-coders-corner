@@ -22,21 +22,21 @@ const BlogPostPage = () => {
   useEffect(() => {
     const loadPost = async () => {
       if (!id) return;
-      
+
       setLoading(true);
       const fetchedPost = await getPostById(id);
       setPost(fetchedPost);
-      
+
       // 조회수 증가
       if (fetchedPost) {
         await incrementViews(id);
       }
-      
+
       setLoading(false);
     };
 
     loadPost();
-  }, [id, getPostById, incrementViews]);
+  }, [id]);
 
   if (loading) {
     return (

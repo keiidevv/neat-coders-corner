@@ -70,7 +70,7 @@ export function AppSidebar() {
                 ? "w-8 h-8 mx-auto mb-2 rounded-full overflow-hidden border-2 border-primary/20 cursor-pointer hover:border-primary/40 transition-colors"
                 : "w-24 h-24 mx-auto mb-4 rounded-full overflow-hidden border-4 border-primary/20 cursor-pointer hover:border-primary/40 transition-colors"
             }
-            onClick={() => navigate("/about")}
+            onClick={() => navigate("/")}
           >
             <img
               src="/lovable-uploads/5fbf1d63-89a1-4500-9b18-0faeb7a58205.png"

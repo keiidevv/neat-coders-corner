@@ -54,7 +54,6 @@ export function AppSidebar() {
   return (
     <Sidebar collapsible="icon">
       <SidebarContent className="p-4">
-        {/* <SidebarTrigger className={collapsed ? "mx-auto" : "ml-4"} /> */}
         {/* 프로필 섹션 */}
         <div className={collapsed ? "mb-6 text-center" : "mb-8 text-center"}>
           <div
@@ -68,6 +67,7 @@ export function AppSidebar() {
               src="/lovable-uploads/5fbf1d63-89a1-4500-9b18-0faeb7a58205.png"
               alt="keiidev 프로필"
               className="w-full h-full object-cover"
+              onClick={() => navigate("/")}
             />
           </div>
           {!collapsed && (

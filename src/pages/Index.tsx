@@ -27,7 +27,7 @@ const Index = () => {
       <main className="px-6 py-12">
         <div className="text-center mb-12">
           <h1 className="text-4xl font-bold mb-4 text-foreground">
-            개발자의 <span className="text-primary">성장 이야기</span>
+            꾸준히 멈추지 않는 <span className="text-primary">성장 기록</span>
           </h1>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             개발하며 배운 것들, 경험한 것들을 정리하고 공유하는 공간입니다.

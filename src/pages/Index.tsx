@@ -3,25 +3,45 @@ import { useNavigate } from "react-router-dom";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import BlogPost from "@/components/BlogPost";
 import CategoryFilter from "@/components/CategoryFilter";
-import { blogPosts } from "@/data/blogPosts";
-import { getViewCount } from "@/hooks/useViewTracking";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 
 const Index = () => {
   const navigate = useNavigate();
   const [activeCategory, setActiveCategory] = useState("전체");
+  const { posts, loading, error } = useBlogPosts();
+
+  // 방문자 추적
+  useVisitorTracking();
 
   const categories = Array.from(
-    new Set(blogPosts.map((post) => post.category))
+    new Set(posts.map((post) => post.category))
   );
 
   const filteredPosts =
     activeCategory === "전체"
-      ? blogPosts
-      : blogPosts.filter((post) => post.category === activeCategory);
+      ? posts
+      : posts.filter((post) => post.category === activeCategory);
 
   const handlePostClick = (postId: string) => {
     navigate(`/post/${postId}`);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">로딩 중...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center text-red-500">오류: {error}</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background font-inter">
@@ -48,10 +68,10 @@ const Index = () => {
                 title={post.title}
                 excerpt={post.excerpt}
                 date={post.date}
-                readTime={post.readTime}
+                readTime={post.read_time}
                 tags={post.tags}
                 featured={post.featured}
-                views={getViewCount(post.id)}
+                views={post.views}
               />
             </div>
           ))}

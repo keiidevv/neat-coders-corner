@@ -1,14 +1,25 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { TrendingUp, Eye } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { getPopularPosts } from "@/hooks/useViewTracking";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
+import { type BlogPost } from "@/lib/supabase";
 
 const PopularPosts = () => {
   const navigate = useNavigate();
   const [period, setPeriod] = useState<'week' | 'month'>('week');
-  const popularPosts = getPopularPosts(period);
+  const [popularPosts, setPopularPosts] = useState<BlogPost[]>([]);
+  const { posts } = useBlogPosts();
+
+  useEffect(() => {
+    // 조회수 기준으로 정렬하여 인기 포스트 생성
+    const sortedPosts = [...posts]
+      .sort((a, b) => (b.views || 0) - (a.views || 0))
+      .slice(0, 5);
+    
+    setPopularPosts(sortedPosts);
+  }, [posts, period]);
 
   const handlePostClick = (postId: string) => {
     navigate(`/post/${postId}`);
@@ -58,7 +69,7 @@ const PopularPosts = () => {
               </h4>
               <div className="flex items-center gap-2 text-xs text-muted-foreground">
                 <Eye className="h-3 w-3" />
-                <span>{post.totalViews.toLocaleString()}</span>
+                <span>{(post.views || 0).toLocaleString()}</span>
               </div>
             </div>
           </div>

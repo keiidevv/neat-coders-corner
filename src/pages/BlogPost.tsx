@@ -1,23 +1,50 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 import { Calendar, Clock, ArrowLeft, Tag, Eye, Home } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { blogPosts } from "@/data/blogPosts";
+import { useBlogPosts } from "@/hooks/useBlogPosts";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
+import { type BlogPost } from "@/lib/supabase";
 import Comments from "@/components/Comments";
-import { useViewTracking, getViewCount } from "@/hooks/useViewTracking";
 
 const BlogPostPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
+  const { getPostById, incrementViews } = useBlogPosts();
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  // 조회수 추적
-  if (id) {
-    useViewTracking(id);
+  // 방문자 추적 (포스트 ID 포함)
+  useVisitorTracking(id);
+
+  useEffect(() => {
+    const loadPost = async () => {
+      if (!id) return;
+      
+      setLoading(true);
+      const fetchedPost = await getPostById(id);
+      setPost(fetchedPost);
+      
+      // 조회수 증가
+      if (fetchedPost) {
+        await incrementViews(id);
+      }
+      
+      setLoading(false);
+    };
+
+    loadPost();
+  }, [id, getPostById, incrementViews]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">로딩 중...</div>
+      </div>
+    );
   }
-
-  const post = blogPosts.find((p) => p.id === id);
-  const viewCount = id ? getViewCount(id) : 0;
 
   if (!post) {
     return (
@@ -64,12 +91,12 @@ const BlogPostPage = () => {
 
               <div className="flex items-center gap-1">
                 <Clock className="h-4 w-4" />
-                <span>{post.readTime}</span>
+                <span>{post.read_time}</span>
               </div>
 
               <div className="flex items-center gap-1">
                 <Eye className="h-4 w-4" />
-                <span>{viewCount.toLocaleString()} 조회</span>
+                <span>{(post.views || 0).toLocaleString()} 조회</span>
               </div>
             </div>
 

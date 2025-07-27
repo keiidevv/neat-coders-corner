@@ -1,5 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
-import { Calendar, Clock, ArrowLeft, Tag, Eye } from "lucide-react";
+import { Calendar, Clock, ArrowLeft, Tag, Eye, Home } from "lucide-react";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -10,12 +10,12 @@ import { useViewTracking, getViewCount } from "@/hooks/useViewTracking";
 const BlogPostPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  
+
   // 조회수 추적
   if (id) {
     useViewTracking(id);
   }
-  
+
   const post = blogPosts.find((p) => p.id === id);
   const viewCount = id ? getViewCount(id) : 0;
 
@@ -27,10 +27,7 @@ const BlogPostPage = () => {
           <Button
             onClick={() => navigate("/")}
             className="flex items-center gap-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            홈으로 돌아가기
-          </Button>
+          ></Button>
         </div>
       </div>
     );
@@ -99,7 +96,7 @@ const BlogPostPage = () => {
               {post.content}
             </div>
           </div>
-          
+
           <Comments postId={post.id} />
         </article>
       </main>

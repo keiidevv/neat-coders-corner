@@ -1,5 +1,12 @@
 import { useState } from "react";
-import { Folder, FolderOpen, FileText, User } from "lucide-react";
+import {
+  Folder,
+  FolderOpen,
+  FileText,
+  User,
+  TextCursorIcon,
+  MousePointer2Icon,
+} from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { blogPosts } from "@/data/blogPosts";
 import PopularPosts from "./PopularPosts";
@@ -56,7 +63,7 @@ export function AppSidebar() {
     <Sidebar collapsible="icon">
       <SidebarContent className="p-4">
         {/* 프로필 섹션 */}
-        <div className={collapsed ? "mb-6 text-center" : "mb-8 text-center"}>
+        <div className={collapsed ? "mb-4 text-center" : "mb-2 text-center"}>
           <div
             className={
               collapsed
@@ -73,24 +80,26 @@ export function AppSidebar() {
           </div>
           {!collapsed && (
             <>
-              <h2 
-                className="text-xl font-bold text-foreground mb-2 cursor-pointer hover:text-primary transition-colors"
-                onClick={() => navigate("/about")}
-              >
-                keiidev
-              </h2>
+              <div className="flex justify-center items-center gap-2 mb-2">
+                <h2
+                  className="text-xl font-bold text-foreground cursor-pointer hover:text-primary transition-colors"
+                  onClick={() => navigate("/about")}
+                >
+                  keiidev
+                </h2>
+                <button
+                  onClick={() => navigate("/about")}
+                  className="inline-flex items-center gap-1 px-3 py-1 text-[10.5px] bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
+                >
+                  <MousePointer2Icon className="h-2 w-2" />
+                  About
+                </button>
+              </div>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">
-                프론트엔드 개발자로 성장하며
+                풀스택 개발자로 스타트업에서 성장하며
                 <br />
                 배운 것들을 기록하고 공유합니다.
               </p>
-              <button
-                onClick={() => navigate("/about")}
-                className="inline-flex items-center gap-2 px-3 py-1.5 text-xs bg-primary/10 text-primary rounded-full hover:bg-primary/20 transition-colors"
-              >
-                <User className="h-3 w-3" />
-                내 소개 보기
-              </button>
             </>
           )}
         </div>
@@ -174,7 +183,7 @@ export function AppSidebar() {
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-        
+
         {!collapsed && (
           <div className="mt-auto">
             <PopularPosts />
